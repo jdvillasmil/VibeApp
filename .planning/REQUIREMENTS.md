@@ -128,22 +128,69 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 to FOUND-08 | Phase 1 | Pending |
-| AUTH-01 to AUTH-07 | Phase 2 | Pending |
-| PROF-01 to PROF-04 | Phase 2 | Pending |
-| VIBE-01 to VIBE-04 | Phase 3 | Pending |
-| DISC-01 to DISC-06 | Phase 3 | Pending |
-| FREN-01 to FREN-02 | Phase 3 | Pending |
-| CHAT-01 to CHAT-09 | Phase 4 | Pending |
-| NOTF-01 to NOTF-07 | Phase 5 | Pending |
-| APK-01 to APK-05 | Phase 6 | Pending |
-| QUAL-01 to QUAL-05 | All phases | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| FOUND-05 | Phase 1 | Pending |
+| FOUND-06 | Phase 1 | Pending |
+| FOUND-07 | Phase 1 | Pending |
+| FOUND-08 | Phase 1 | Pending |
+| QUAL-01 | Phase 1 | Pending |
+| QUAL-02 | Phase 1 | Pending |
+| QUAL-03 | Phase 1 | Pending |
+| QUAL-04 | Phase 1 | Pending |
+| QUAL-05 | Phase 1 | Pending |
+| AUTH-01 | Phase 2 | Pending |
+| AUTH-02 | Phase 2 | Pending |
+| AUTH-03 | Phase 2 | Pending |
+| AUTH-04 | Phase 2 | Pending |
+| AUTH-05 | Phase 2 | Pending |
+| AUTH-06 | Phase 2 | Pending |
+| AUTH-07 | Phase 2 | Pending |
+| PROF-01 | Phase 2 | Pending |
+| PROF-02 | Phase 2 | Pending |
+| PROF-03 | Phase 2 | Pending |
+| PROF-04 | Phase 2 | Pending |
+| VIBE-01 | Phase 3 | Pending |
+| VIBE-02 | Phase 3 | Pending |
+| VIBE-03 | Phase 3 | Pending |
+| VIBE-04 | Phase 3 | Pending |
+| DISC-01 | Phase 3 | Pending |
+| DISC-02 | Phase 3 | Pending |
+| DISC-03 | Phase 3 | Pending |
+| DISC-04 | Phase 3 | Pending |
+| DISC-05 | Phase 3 | Pending |
+| DISC-06 | Phase 3 | Pending |
+| FREN-01 | Phase 3 | Pending |
+| FREN-02 | Phase 3 | Pending |
+| CHAT-01 | Phase 4 | Pending |
+| CHAT-02 | Phase 4 | Pending |
+| CHAT-03 | Phase 4 | Pending |
+| CHAT-04 | Phase 4 | Pending |
+| CHAT-05 | Phase 4 | Pending |
+| CHAT-06 | Phase 4 | Pending |
+| CHAT-07 | Phase 4 | Pending |
+| CHAT-08 | Phase 4 | Pending |
+| CHAT-09 | Phase 4 | Pending |
+| NOTF-01 | Phase 5 | Pending |
+| NOTF-02 | Phase 5 | Pending |
+| NOTF-03 | Phase 5 | Pending |
+| NOTF-04 | Phase 5 | Pending |
+| NOTF-05 | Phase 5 | Pending |
+| NOTF-06 | Phase 5 | Pending |
+| NOTF-07 | Phase 5 | Pending |
+| APK-01 | Phase 6 | Pending |
+| APK-02 | Phase 6 | Pending |
+| APK-03 | Phase 6 | Pending |
+| APK-04 | Phase 6 | Pending |
+| APK-05 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 51 total
-- Mapped to phases: 51
-- Unmapped: 0 ✓
+- v1 requirements: 57 total (note: initial count of 51 was incorrect — actual count per requirements list is 57)
+- Mapped to phases: 57
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-01*
-*Last updated: 2026-04-01 after initial definition*
+*Last updated: 2026-04-01 — traceability expanded to individual requirement rows; QUAL-01 to QUAL-05 formally assigned to Phase 1 (established at foundation, enforced throughout)*
