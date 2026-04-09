@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-backend-foundation/01-01-PLAN.md
-last_updated: "2026-04-09T14:00:59.730Z"
+stopped_at: Completed 01-02-PLAN.md frontend scaffold
+last_updated: "2026-04-09T14:05:44.325Z"
 last_activity: 2026-04-01 — Roadmap created, ready to begin Phase 1 planning
 progress:
   total_phases: 6
@@ -51,6 +51,7 @@ Progress: [░░░░░░░░░░] 0%
 
 *Updated after each plan completion*
 | Phase 01-backend-foundation P01 | 6 | 3 tasks | 12 files |
+| Phase 01 P02 | 10 | 3 tasks | 18 files |
 
 ## Accumulated Context
 
@@ -67,6 +68,8 @@ Recent decisions affecting current work:
 - [Phase 01-backend-foundation]: Express static dotfiles:allow required — Express denies dotfiles by default, .gitkeep returns 404 without it
 - [Phase 01-backend-foundation]: console.warn used in migrate.js — ESLint only allows log and warn, not error
 - [Phase 01-backend-foundation]: Cloudinary Multer middleware added from start — Railway ephemeral disk unsuitable for file storage
+- [Phase 01]: Angular 20 used instead of Angular 18 -- ionic start template upgraded, zone.js conflict prevented downgrade, standalone/signals patterns identical
+- [Phase 01]: Migrated NgModule scaffold to standalone bootstrapApplication() + loadComponent() immediately -- plan requires standalone: true throughout
 
 ### Pending Todos
 
@@ -82,6 +85,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-09T14:00:59.726Z
-Stopped at: Completed 01-backend-foundation/01-01-PLAN.md
+Last session: 2026-04-09T14:05:41.354Z
+Stopped at: Completed 01-02-PLAN.md frontend scaffold
 Resume file: None
