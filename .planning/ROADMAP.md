@@ -31,7 +31,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. `node src/config/migrate.js` runs without errors and all tables exist in PostgreSQL
   4. ESLint and Prettier pass with zero errors on a fresh checkout
   5. `.env.example` lists every required variable; no `.env` file is committed to git
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Backend scaffold: Express server, pg Pool, migration, health route, CORS, static files, ESLint
+- [ ] 01-02-PLAN.md — Frontend scaffold: Ionic + Angular 18 standalone, environment files, Capacitor Android, Angular ESLint
+- [ ] 01-03-PLAN.md — Integration verification: Railway deploy, migration, Android emulator CORS checkpoint
 
 ### Phase 2: Auth & Profile
 **Goal**: Users can create accounts, authenticate securely, and manage their profiles — every protected endpoint is usable
@@ -98,7 +103,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Backend Foundation | 0/TBD | Not started | - |
+| 1. Backend Foundation | 0/3 | Planning done | - |
 | 2. Auth & Profile | 0/TBD | Not started | - |
 | 3. Vibe Status + Discovery | 0/TBD | Not started | - |
 | 4. Real-time Chat | 0/TBD | Not started | - |
@@ -107,3 +112,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 ---
 *Roadmap created: 2026-04-01*
+*Updated: 2026-04-08 — Phase 1 plans defined (3 plans, 2 waves)*
