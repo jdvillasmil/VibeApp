@@ -12,7 +12,7 @@ VIBE is delivered in 6 phases that mirror the natural dependency chain of the pr
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Backend Foundation** - Project scaffolding, Railway wiring, DB migration, code quality baseline
+- [x] **Phase 1: Backend Foundation** - Project scaffolding, Render deployment, DB migration, CORS verified, code quality baseline
 - [ ] **Phase 2: Auth & Profile** - Registration, login, JWT, profile CRUD, avatar upload
 - [ ] **Phase 3: Vibe Status + Discovery** - Vibe presets, swipe card stack, like/reject, mutual match, friends list
 - [ ] **Phase 4: Real-time Chat** - Socket.io rooms, message persistence, read receipts, typing indicator
@@ -34,9 +34,9 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 3 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — Backend scaffold: Express server, pg Pool, migration, health route, CORS, static files, ESLint
-- [ ] 01-02-PLAN.md — Frontend scaffold: Ionic + Angular 18 standalone, environment files, Capacitor Android, Angular ESLint
-- [ ] 01-03-PLAN.md — Integration verification: Railway deploy, migration, Android emulator CORS checkpoint
+- [x] 01-01-PLAN.md — Backend scaffold: Express server, pg Pool, migration, health route, CORS, static files, ESLint
+- [x] 01-02-PLAN.md — Frontend scaffold: Ionic + Angular 20 standalone, environment files, Capacitor Android, Angular ESLint
+- [x] 01-03-PLAN.md — Integration verification: Render deploy, migration, Android emulator CORS checkpoint
 
 ### Phase 2: Auth & Profile
 **Goal**: Users can create accounts, authenticate securely, and manage their profiles — every protected endpoint is usable
@@ -103,7 +103,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Backend Foundation | 2/3 | In Progress|  |
+| 1. Backend Foundation | 3/3 | Complete | 2026-04-09 |
 | 2. Auth & Profile | 0/TBD | Not started | - |
 | 3. Vibe Status + Discovery | 0/TBD | Not started | - |
 | 4. Real-time Chat | 0/TBD | Not started | - |
