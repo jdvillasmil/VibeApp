@@ -32,7 +32,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Static file serving — uploads/ must exist (see .gitkeep)
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// dotfiles: 'allow' required so Express serves .gitkeep (dotfiles are denied by default)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { dotfiles: 'allow' }));
 
 // Routes
 app.use('/health', require('./routes/health'));
