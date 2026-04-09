@@ -1,0 +1,20 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+
+# Build artifacts
+dist/
+www/
+.angular/
+
+# Capacitor native build artifacts
+android/.gradle/
+android/app/build/
+android/build/
+ios/
+
+# Uploads (keep folder, ignore contents)
+backend/src/uploads/*
+!backend/src/uploads/.gitkeep
