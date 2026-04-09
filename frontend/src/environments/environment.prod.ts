@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiUrl: 'https://your-app.railway.app',  // Replace with actual Railway URL when available
 };
