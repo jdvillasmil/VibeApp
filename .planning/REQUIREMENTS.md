@@ -7,13 +7,13 @@
 
 ### Foundation
 
-- [ ] **FOUND-01**: Backend Express app starts and binds to `0.0.0.0:process.env.PORT` (Railway compatible)
-- [ ] **FOUND-02**: PostgreSQL connection established via `DATABASE_URL` environment variable
-- [ ] **FOUND-03**: All DB tables created via migration script (`node src/config/migrate.js`)
-- [ ] **FOUND-04**: CORS configured to allow `capacitor://localhost`, `http://localhost:8100`, and Railway frontend origin
-- [ ] **FOUND-05**: `/uploads` directory served as static files
-- [ ] **FOUND-06**: `GET /health` returns 200 with service status
-- [ ] **FOUND-07**: `.env.example` documents all required environment variables; `.env` is gitignored
+- [x] **FOUND-01**: Backend Express app starts and binds to `0.0.0.0:process.env.PORT` (Railway compatible)
+- [x] **FOUND-02**: PostgreSQL connection established via `DATABASE_URL` environment variable
+- [x] **FOUND-03**: All DB tables created via migration script (`node src/config/migrate.js`)
+- [x] **FOUND-04**: CORS configured to allow `capacitor://localhost`, `http://localhost:8100`, and Railway frontend origin
+- [x] **FOUND-05**: `/uploads` directory served as static files
+- [x] **FOUND-06**: `GET /health` returns 200 with service status
+- [x] **FOUND-07**: `.env.example` documents all required environment variables; `.env` is gitignored
 - [ ] **FOUND-08**: Angular environments configured (`environment.ts` → localhost, `environment.prod.ts` → Railway URL)
 
 ### Authentication
@@ -86,8 +86,8 @@
 
 ### Code Quality
 
-- [ ] **QUAL-01**: ESLint + Prettier configured and passing from day one
-- [ ] **QUAL-02**: All API responses use `{ data, error, message }` envelope format
+- [x] **QUAL-01**: ESLint + Prettier configured and passing from day one
+- [x] **QUAL-02**: All API responses use `{ data, error, message }` envelope format
 - [ ] **QUAL-03**: Angular uses standalone components (no NgModule where avoidable)
 - [ ] **QUAL-04**: Angular signals used in preference to RxJS for local state
 - [ ] **QUAL-05**: No `console.error` in production builds
@@ -128,16 +128,16 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
-| FOUND-02 | Phase 1 | Pending |
-| FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
-| FOUND-05 | Phase 1 | Pending |
-| FOUND-06 | Phase 1 | Pending |
-| FOUND-07 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
+| FOUND-02 | Phase 1 | Complete |
+| FOUND-03 | Phase 1 | Complete |
+| FOUND-04 | Phase 1 | Complete |
+| FOUND-05 | Phase 1 | Complete |
+| FOUND-06 | Phase 1 | Complete |
+| FOUND-07 | Phase 1 | Complete |
 | FOUND-08 | Phase 1 | Pending |
-| QUAL-01 | Phase 1 | Pending |
-| QUAL-02 | Phase 1 | Pending |
+| QUAL-01 | Phase 1 | Complete |
+| QUAL-02 | Phase 1 | Complete |
 | QUAL-03 | Phase 1 | Pending |
 | QUAL-04 | Phase 1 | Pending |
 | QUAL-05 | Phase 1 | Pending |
