@@ -14,7 +14,7 @@ app.use(
         'http://localhost', // Android Capacitor WebView
         'http://localhost:8100', // ionic serve
         'http://localhost:4200', // ng serve
-        process.env.RAILWAY_STATIC_URL, // Railway frontend if applicable
+        process.env.RENDER_EXTERNAL_URL, // Render backend public URL
       ].filter(Boolean);
       // Allow requests with no origin (server-to-server, curl without -H Origin)
       if (!origin || allowed.includes(origin)) {
