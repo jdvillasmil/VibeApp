@@ -1,5 +1,5 @@
 import { Component, signal, inject, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom, Subscription } from 'rxjs';
@@ -100,14 +100,12 @@ interface ApiResponse<T> { data: T; error: string | null; message: string; }
     .tick { font-size: 0.7rem; opacity: 0.6; }
     .tick.read { color: #60a5fa; opacity: 1; }
     .bubble.mine .tick.read { color: #bfdbfe; }
-    /* Typing */
     .typing { display: flex; gap: 5px; align-items: center; padding: 12px 16px; border-radius: 18px 18px 18px 4px; }
     .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ion-color-medium); animation: bounce 1s infinite; }
     .dot:nth-child(2) { animation-delay: .2s; }
     .dot:nth-child(3) { animation-delay: .4s; }
     @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
-    /* Footer */
-    .toolbar { display: flex; align-items: center; padding: 4px 4px; border-top: 1px solid #e2e8f0; background: var(--ion-background-color, white); }
+    .toolbar { display: flex; align-items: center; padding: 4px; border-top: 1px solid var(--ion-border-color, #e2e8f0); background: var(--ion-background-color, white); }
     .flex-input { flex: 1; --padding-start: 12px; }
   `],
 })
@@ -115,6 +113,7 @@ export class ChatRoomPage implements OnInit, OnDestroy {
   @ViewChild('content') ionContent?: IonContent;
 
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private http = inject(HttpClient);
   private auth = inject(AuthService);
   private socket = inject(SocketService);
@@ -141,13 +140,14 @@ export class ChatRoomPage implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     this.chatId = Number(this.route.snapshot.paramMap.get('id'));
 
-    // Get own user id from profile
-    try {
-      const res = await firstValueFrom(
-        this.http.get<ApiResponse<{ id: number; name: string }>>(`${this.api}/users/me`)
-      );
-      this.myId.set(res.data.id);
-    } catch { /* use 0 */ }
+    // Get partner name from router navigation state (passed by chat-list / friends-list)
+    const nav = this.router.getCurrentNavigation();
+    const stateName = nav?.extras?.state?.['partnerName'] as string | undefined;
+    if (stateName) this.partnerName.set(stateName);
+
+    // Get own user ID from JWT payload — no extra API call needed
+    const payload = await this.auth.getTokenPayload();
+    if (payload) this.myId.set(payload.id);
 
     // Load message history
     try {
@@ -155,17 +155,17 @@ export class ChatRoomPage implements OnInit, OnDestroy {
         this.http.get<ApiResponse<ChatMessage[]>>(`${this.api}/chats/${this.chatId}/messages`)
       );
       this.messages.set(res.data ?? []);
-      // Derive partner name from first message by other user
-      const other = res.data.find((m) => m.sender_id !== this.myId());
-      if (other) this.partnerName.set(other.sender_name);
+      // If no name from state, derive from first message by the other user
+      if (!stateName || this.partnerName() === 'Chat') {
+        const other = res.data.find((m) => m.sender_id !== this.myId());
+        if (other) this.partnerName.set(other.sender_name);
+      }
     } catch { /* ignore */ }
     finally { this.loading.set(false); }
 
-    // Join socket room and mark read
     this.socket.joinChat(this.chatId);
     this.socket.markRead(this.chatId);
 
-    // Subscribe to real-time events
     this.subs.push(
       this.socket.newMessage$.subscribe((msg) => {
         if (msg.chat_id !== this.chatId) return;
@@ -173,16 +173,15 @@ export class ChatRoomPage implements OnInit, OnDestroy {
           if (prev.find((m) => m.id === msg.id)) return prev;
           return [...prev, msg];
         });
-        if (!this.partnerName() || this.partnerName() === 'Chat') {
-          if (msg.sender_id !== this.myId()) this.partnerName.set(msg.sender_name);
+        if (msg.sender_id !== this.myId()) {
+          this.socket.markRead(this.chatId);
+          // Update partner name if still unknown
+          if (this.partnerName() === 'Chat') this.partnerName.set(msg.sender_name);
         }
-        if (msg.sender_id !== this.myId()) this.socket.markRead(this.chatId);
         this.scrollBottom();
       }),
       this.socket.typingEvent$.subscribe((d) => {
-        if (d.chatId === this.chatId && d.userId !== this.myId()) {
-          this.partnerTyping.set(true);
-        }
+        if (d.chatId === this.chatId && d.userId !== this.myId()) this.partnerTyping.set(true);
       }),
       this.socket.stopTypingEvent$.subscribe((d) => {
         if (d.chatId === this.chatId) this.partnerTyping.set(false);
@@ -236,7 +235,6 @@ export class ChatRoomPage implements OnInit, OnDestroy {
       const res = await firstValueFrom(
         this.http.post<ApiResponse<ChatMessage>>(`${this.api}/chats/${this.chatId}/images`, form)
       );
-      // Add locally; socket room will also broadcast
       this.messages.update((prev) => {
         if (prev.find((m) => m.id === res.data.id)) return prev;
         return [...prev, res.data];

@@ -30,6 +30,24 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  /**
+   * Decode JWT payload without verification (server already verified it).
+   * Returns { id, email } from the token claims, or null if no token.
+   */
+  async getTokenPayload(): Promise<{ id: number; email: string } | null> {
+    const token = await this.getToken();
+    if (!token) return null;
+    try {
+      const parts = token.split('.');
+      if (parts.length !== 3) return null;
+      // Base64url decode the payload
+      const payload = JSON.parse(atob(parts[1].replace(/-/g, '+').replace(/_/g, '/')));
+      return { id: payload.id, email: payload.email };
+    } catch {
+      return null;
+    }
+  }
+
   login(email: string, password: string) {
     return firstValueFrom(
       this.http.post<{ data: { user: any; token: string } }>(

@@ -116,6 +116,6 @@ export class FriendsListPage implements OnInit {
   }
 
   openChat(f: Friend): void {
-    if (f.chat_id) this.router.navigate(['/tabs/chat', f.chat_id]);
+    if (f.chat_id) this.router.navigate(['/tabs/chat', f.chat_id], { state: { partnerName: f.name } });
   }
 }

@@ -121,6 +121,6 @@ export class ChatListPage implements OnInit, OnDestroy {
   }
 
   open(chat: ChatSummary): void {
-    this.router.navigate(['/tabs/chat', chat.chat_id]);
+    this.router.navigate(['/tabs/chat', chat.chat_id], { state: { partnerName: chat.name } });
   }
 }
