@@ -1,4 +1,5 @@
 const usersService = require('../services/users.service');
+const { updateVibe: updateVibeService } = require('../services/discovery.service');
 
 async function getMe(req, res) {
   try {
@@ -19,7 +20,8 @@ async function updateMe(req, res) {
       try {
         interests = JSON.parse(interests);
       } catch {
-        // Leave as-is if not valid JSON (e.g., plain string value)
+        // Leave as-is if not valid JSON (e.g., plain comma-separated string)
+        interests = interests.split(',').map((s) => s.trim()).filter(Boolean);
       }
     }
 
@@ -45,4 +47,18 @@ async function updateAvatar(req, res) {
   }
 }
 
-module.exports = { getMe, updateMe, updateAvatar };
+async function updateVibe(req, res) {
+  try {
+    const { vibe } = req.body;
+    if (!vibe) {
+      return res.status(400).json({ data: null, error: 'Validation error', message: 'vibe is required' });
+    }
+    const result = await updateVibeService(req.user.id, vibe);
+    return res.status(200).json({ data: result, error: null, message: 'Vibe updated' });
+  } catch (err) {
+    const status = err.status || 500;
+    return res.status(status).json({ data: null, error: err.message, message: err.message });
+  }
+}
+
+module.exports = { getMe, updateMe, updateAvatar, updateVibe };
