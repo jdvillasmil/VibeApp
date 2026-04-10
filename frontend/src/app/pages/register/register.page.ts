@@ -14,6 +14,7 @@ import {
   AlertController,
 } from '@ionic/angular/standalone';
 import { AuthService } from '../../core/services/auth.service';
+import { SocketService } from '../../core/services/socket.service';
 
 @Component({
   selector: 'app-register',
@@ -36,6 +37,7 @@ import { AuthService } from '../../core/services/auth.service';
 export class RegisterPage {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private socketService = inject(SocketService);
   private router = inject(Router);
   private alertCtrl = inject(AlertController);
 
@@ -71,11 +73,12 @@ export class RegisterPage {
     try {
       const res = await this.authService.register(formData);
       await this.authService.setToken(res.data.token);
-      this.router.navigate(['/profile']);
+      await this.socketService.connect();
+      this.router.navigate(['/tabs/discover']);
     } catch {
       const alert = await this.alertCtrl.create({
-        header: 'Registration Failed',
-        message: 'Could not create account. Please try again.',
+        header: 'Error al registrarse',
+        message: 'No se pudo crear la cuenta. Intenta con otro email.',
         buttons: ['OK'],
       });
       await alert.present();

@@ -37,9 +37,6 @@ async function updateMe(userId, { name, bio, interests }) {
     return getMe(userId);
   }
 
-  // Always bump updated_at
-  updates.push(`updated_at = NOW()`);
-
   values.push(userId);
 
   const result = await pool.query(
@@ -56,7 +53,7 @@ async function updateMe(userId, { name, bio, interests }) {
 async function updateAvatar(userId, avatarUrl) {
   const result = await pool.query(
     `UPDATE users
-     SET avatar_url = $1, updated_at = NOW()
+     SET avatar_url = $1
      WHERE id = $2
      RETURNING id, avatar_url`,
     [avatarUrl, userId]

@@ -1,20 +1,26 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Profile</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Mi Perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogout()">
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ng-container *ngIf="user()">
+  <ng-container *ngIf="user(); else loading">
+
     <!-- Avatar -->
-    <div class="ion-text-center ion-padding-bottom">
+    <div class="avatar-section">
       <app-avatar
         [avatarUrl]="user()?.avatar_url"
         [name]="user()?.name || ''"
       ></app-avatar>
       <div class="ion-padding-top">
-        <label style="cursor: pointer; color: var(--ion-color-primary);">
-          Change Photo
+        <label class="change-photo-btn">
+          Cambiar foto
           <input
             type="file"
             accept="image/*"
@@ -25,50 +31,71 @@
       </div>
     </div>
 
-    <!-- Edit Form -->
+    <!-- Vibe selector -->
+    <div class="section-block">
+      <ion-label class="section-title">Mi Vibe</ion-label>
+      <div class="vibe-chips">
+        <div
+          *ngFor="let v of vibes"
+          class="vibe-chip"
+          [class.selected]="selectedVibe() === v.label"
+          (click)="selectVibe(v.label)"
+        >
+          <span class="vibe-emoji">{{ v.emoji }}</span>
+          <span class="vibe-name">{{ v.label }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit form -->
     <form [formGroup]="form" (ngSubmit)="onSave()">
       <ion-item>
-        <ion-label position="stacked">Name</ion-label>
+        <ion-label position="stacked">Nombre</ion-label>
         <ion-input
           type="text"
           formControlName="name"
-          placeholder="Your name"
+          placeholder="Tu nombre"
         ></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="stacked">Bio</ion-label>
+        <ion-label position="stacked">Biografía</ion-label>
         <ion-textarea
           formControlName="bio"
-          placeholder="Tell us about yourself..."
-          rows="4"
+          placeholder="Cuéntanos sobre ti..."
+          rows="3"
         ></ion-textarea>
       </ion-item>
 
+      <ion-item>
+        <ion-label position="stacked">Intereses (separados por coma)</ion-label>
+        <ion-input
+          type="text"
+          formControlName="interests"
+          placeholder="ej: fútbol, música, películas"
+        ></ion-input>
+      </ion-item>
+
       <div class="ion-padding-top">
-        <ion-button expand="block" type="submit">
-          Save Changes
+        <ion-button expand="block" type="submit" [disabled]="saving()">
+          <ion-spinner *ngIf="saving()" name="crescent"></ion-spinner>
+          <span *ngIf="!saving()">Guardar cambios</span>
         </ion-button>
       </div>
     </form>
 
-    <!-- Interests display -->
-    <div *ngIf="user()?.interests?.length" class="ion-padding-top">
-      <ion-label>Interests</ion-label>
-      <p>{{ user()?.interests?.join(', ') }}</p>
-    </div>
-
     <!-- Logout -->
     <div class="ion-padding-top">
       <ion-button expand="block" fill="outline" color="danger" (click)="onLogout()">
-        Logout
+        Cerrar sesión
       </ion-button>
     </div>
+
   </ng-container>
 
-  <ng-container *ngIf="!user()">
-    <div class="ion-text-center ion-padding">
-      <p>Loading profile...</p>
+  <ng-template #loading>
+    <div class="center">
+      <ion-spinner name="crescent"></ion-spinner>
     </div>
-  </ng-container>
+  </ng-template>
 </ion-content>

@@ -15,6 +15,7 @@ import {
   AlertController,
 } from '@ionic/angular/standalone';
 import { AuthService } from '../../core/services/auth.service';
+import { SocketService } from '../../core/services/socket.service';
 
 @Component({
   selector: 'app-login',
@@ -38,6 +39,7 @@ import { AuthService } from '../../core/services/auth.service';
 export class LoginPage {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
+  private socketService = inject(SocketService);
   private router = inject(Router);
   private alertCtrl = inject(AlertController);
 
@@ -54,11 +56,12 @@ export class LoginPage {
     try {
       const res = await this.authService.login(email!, password!);
       await this.authService.setToken(res.data.token);
-      this.router.navigate(['/profile']);
+      await this.socketService.connect();
+      this.router.navigate(['/tabs/discover']);
     } catch {
       const alert = await this.alertCtrl.create({
-        header: 'Login Failed',
-        message: 'Invalid email or password.',
+        header: 'Error al iniciar sesión',
+        message: 'Email o contraseña incorrectos.',
         buttons: ['OK'],
       });
       await alert.present();

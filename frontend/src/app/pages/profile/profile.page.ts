@@ -13,11 +13,27 @@ import {
   IonTextarea,
   IonButton,
   IonLabel,
+  IonChip,
+  IonSpinner,
+  IonButtons,
+  IonIcon,
   AlertController,
+  ToastController,
 } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
+import { logOutOutline } from 'ionicons/icons';
 import { AuthService } from '../../core/services/auth.service';
+import { SocketService } from '../../core/services/socket.service';
 import { AvatarComponent } from '../../shared/components/avatar/avatar.component';
 import { environment } from '../../../environments/environment';
+
+const VIBES = [
+  { label: 'Gaming',   emoji: '🎮' },
+  { label: 'Music',    emoji: '🎵' },
+  { label: 'Studying', emoji: '📚' },
+  { label: 'Hang',     emoji: '🤙' },
+  { label: 'Chill',    emoji: '😎' },
+];
 
 @Component({
   selector: 'app-profile',
@@ -34,51 +50,99 @@ import { environment } from '../../../environments/environment';
     IonTextarea,
     IonButton,
     IonLabel,
+    IonChip,
+    IonSpinner,
+    IonButtons,
+    IonIcon,
     AvatarComponent,
   ],
   templateUrl: './profile.page.html',
+  styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
   private authService = inject(AuthService);
+  private socketService = inject(SocketService);
   private http = inject(HttpClient);
   private fb = inject(FormBuilder);
   private alertCtrl = inject(AlertController);
+  private toastCtrl = inject(ToastController);
 
   user = signal<any>(null);
+  saving = signal(false);
+  selectedVibe = signal<string>('');
+  vibes = VIBES;
 
   form = this.fb.group({
     name: [''],
     bio: [''],
+    interests: [''],
   });
+
+  constructor() {
+    addIcons({ logOutOutline });
+  }
 
   async ngOnInit(): Promise<void> {
     try {
       const res = await this.authService.getProfile();
       this.user.set(res.data);
+      this.selectedVibe.set(res.data.vibe ?? '');
       this.form.patchValue({
         name: res.data.name ?? '',
         bio: res.data.bio ?? '',
+        interests: (res.data.interests ?? []).join(', '),
       });
     } catch {
-      // If profile load fails, user may need to re-authenticate
+      // profile load failed — user will see empty form
     }
   }
 
+  selectVibe(label: string): void {
+    this.selectedVibe.set(this.selectedVibe() === label ? '' : label);
+  }
+
   async onSave(): Promise<void> {
-    const { name, bio } = this.form.value;
+    this.saving.set(true);
+    const { name, bio, interests } = this.form.value;
+
+    const interestsArr = interests
+      ? interests.split(',').map((s: string) => s.trim()).filter(Boolean)
+      : [];
+
     try {
-      const res = await this.authService.updateProfile({
+      // Update profile (name, bio, interests)
+      const profileRes = await this.authService.updateProfile({
         name: name ?? undefined,
         bio: bio ?? undefined,
+        interests: interestsArr.length ? interestsArr : undefined,
       });
-      this.user.set(res.data);
+      this.user.set(profileRes.data);
+
+      // Update vibe separately if changed
+      const vibe = this.selectedVibe();
+      if (vibe && vibe !== this.user()?.vibe) {
+        await firstValueFrom(
+          this.http.patch(`${environment.apiUrl}/users/me/vibe`, { vibe })
+        );
+        this.user.update((u: any) => ({ ...u, vibe }));
+      }
+
+      const toast = await this.toastCtrl.create({
+        message: '¡Perfil actualizado!',
+        duration: 2000,
+        color: 'success',
+        position: 'bottom',
+      });
+      await toast.present();
     } catch {
       const alert = await this.alertCtrl.create({
-        header: 'Save Failed',
-        message: 'Could not update profile. Please try again.',
+        header: 'Error',
+        message: 'No se pudo actualizar el perfil.',
         buttons: ['OK'],
       });
       await alert.present();
+    } finally {
+      this.saving.set(false);
     }
   }
 
@@ -97,10 +161,18 @@ export class ProfilePage implements OnInit {
         )
       );
       this.user.update((u: any) => ({ ...u, avatar_url: res.data.avatar_url }));
+
+      const toast = await this.toastCtrl.create({
+        message: '¡Foto actualizada!',
+        duration: 2000,
+        color: 'success',
+        position: 'bottom',
+      });
+      await toast.present();
     } catch {
       const alert = await this.alertCtrl.create({
-        header: 'Upload Failed',
-        message: 'Could not upload avatar. Please try again.',
+        header: 'Error',
+        message: 'No se pudo subir la foto.',
         buttons: ['OK'],
       });
       await alert.present();
@@ -108,6 +180,8 @@ export class ProfilePage implements OnInit {
   }
 
   async onLogout(): Promise<void> {
+    this.socketService.disconnect();
     await this.authService.logout();
+    // AuthService.logout() already navigates to /login
   }
 }
