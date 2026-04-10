@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="user()">
+    <!-- Avatar -->
+    <div class="ion-text-center ion-padding-bottom">
+      <app-avatar
+        [avatarUrl]="user()?.avatar_url"
+        [name]="user()?.name || ''"
+      ></app-avatar>
+      <div class="ion-padding-top">
+        <label style="cursor: pointer; color: var(--ion-color-primary);">
+          Change Photo
+          <input
+            type="file"
+            accept="image/*"
+            style="display: none;"
+            (change)="onAvatarChange($event)"
+          />
+        </label>
+      </div>
+    </div>
+
+    <!-- Edit Form -->
+    <form [formGroup]="form" (ngSubmit)="onSave()">
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input
+          type="text"
+          formControlName="name"
+          placeholder="Your name"
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Bio</ion-label>
+        <ion-textarea
+          formControlName="bio"
+          placeholder="Tell us about yourself..."
+          rows="4"
+        ></ion-textarea>
+      </ion-item>
+
+      <div class="ion-padding-top">
+        <ion-button expand="block" type="submit">
+          Save Changes
+        </ion-button>
+      </div>
+    </form>
+
+    <!-- Interests display -->
+    <div *ngIf="user()?.interests?.length" class="ion-padding-top">
+      <ion-label>Interests</ion-label>
+      <p>{{ user()?.interests?.join(', ') }}</p>
+    </div>
+
+    <!-- Logout -->
+    <div class="ion-padding-top">
+      <ion-button expand="block" fill="outline" color="danger" (click)="onLogout()">
+        Logout
+      </ion-button>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!user()">
+    <div class="ion-text-center ion-padding">
+      <p>Loading profile...</p>
+    </div>
+  </ng-container>
+</ion-content>
