@@ -37,5 +37,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { dotfiles: 
 
 // Routes
 app.use('/health', require('./routes/health'));
+app.use('/auth', require('./routes/auth'));
+app.use('/users', require('./routes/users'));
 
 module.exports = app;
