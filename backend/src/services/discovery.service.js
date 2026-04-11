@@ -5,15 +5,14 @@ const SAFE_USER = 'u.id, u.name, u.avatar_url, u.bio, u.interests, u.vibe, u.vib
 const ALLOWED_VIBES = ['Gaming', 'Music', 'Studying', 'Hang', 'Chill'];
 
 async function getDiscoverUsers(currentUserId) {
-  // Exclude self and anyone already swiped (any direction)
+  // Exclude self and anyone the current user already swiped on (either direction they initiated).
+  // Do NOT exclude users who swiped the current user — if the user swipes them back it becomes a match.
   const result = await pool.query(
     `SELECT ${SAFE_USER}
      FROM users u
      WHERE u.id != $1
        AND u.id NOT IN (
          SELECT addressee_id FROM friendships WHERE requester_id = $1
-         UNION
-         SELECT requester_id FROM friendships WHERE addressee_id = $1
        )
      ORDER BY RANDOM()
      LIMIT 20`,
@@ -125,7 +124,7 @@ async function rejectUser(requesterId, addresseeId) {
 
 async function getFriends(userId) {
   const result = await pool.query(
-    `SELECT u.id, u.name, u.avatar_url, u.bio, u.vibe, u.vibe_updated_at,
+    `SELECT DISTINCT ON (u.id) u.id, u.name, u.avatar_url, u.bio, u.vibe, u.vibe_updated_at,
             c.id AS chat_id
      FROM friendships f
      JOIN users u ON (
@@ -137,7 +136,7 @@ async function getFriends(userId) {
      )
      WHERE (f.requester_id = $1 OR f.addressee_id = $1)
        AND f.status = 'accepted'
-     ORDER BY u.name`,
+     ORDER BY u.id, u.name`,
     [userId]
   );
   return result.rows;
