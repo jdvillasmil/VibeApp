@@ -68,13 +68,13 @@
 
 ### Notifications
 
-- [ ] **NOTF-01**: App saves device FCM token to backend on login (`POST /users/me/fcm-token`)
-- [ ] **NOTF-02**: Push notification is sent via FCM v1 API (`firebase-admin`) when a user receives a new friend request
-- [ ] **NOTF-03**: Push notification is sent when a friend request is accepted (mutual match)
-- [ ] **NOTF-04**: Push notification is sent when a new message arrives while app is in background
-- [ ] **NOTF-05**: Notifications are persisted in the `notifications` DB table
-- [ ] **NOTF-06**: In-app notification panel shows notification history list with unread count badge on bell icon
-- [ ] **NOTF-07**: Notifications are marked as read when the panel is opened
+- [x] **NOTF-01**: App saves device FCM token to backend on login (`POST /users/me/fcm-token`)
+- [x] **NOTF-02**: Push notification is sent via FCM v1 API (`firebase-admin`) when a user receives a new friend request
+- [x] **NOTF-03**: Push notification is sent when a friend request is accepted (mutual match)
+- [x] **NOTF-04**: Push notification is sent when a new message arrives while app is in background
+- [x] **NOTF-05**: Notifications are persisted in the `notifications` DB table
+- [x] **NOTF-06**: In-app notification panel shows notification history list with unread count badge on bell icon
+- [x] **NOTF-07**: Notifications are marked as read when the panel is opened
 
 ### APK & Deployment
 
@@ -173,13 +173,13 @@
 | CHAT-07 | Phase 4 | Pending |
 | CHAT-08 | Phase 4 | Pending |
 | CHAT-09 | Phase 4 | Pending |
-| NOTF-01 | Phase 5 | Pending |
-| NOTF-02 | Phase 5 | Pending |
-| NOTF-03 | Phase 5 | Pending |
-| NOTF-04 | Phase 5 | Pending |
-| NOTF-05 | Phase 5 | Pending |
-| NOTF-06 | Phase 5 | Pending |
-| NOTF-07 | Phase 5 | Pending |
+| NOTF-01 | Phase 5 | Complete |
+| NOTF-02 | Phase 5 | Complete |
+| NOTF-03 | Phase 5 | Complete |
+| NOTF-04 | Phase 5 | Complete |
+| NOTF-05 | Phase 5 | Complete |
+| NOTF-06 | Phase 5 | Complete |
+| NOTF-07 | Phase 5 | Complete |
 | APK-01 | Phase 6 | Pending |
 | APK-02 | Phase 6 | Pending |
 | APK-03 | Phase 6 | Pending |

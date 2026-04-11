@@ -40,6 +40,11 @@ export const routes: Routes = [
         path: 'profile',
         loadComponent: () => import('./pages/profile/profile.page').then((m) => m.ProfilePage),
       },
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('./pages/notifications/notifications.page').then((m) => m.NotificationsPage),
+      },
       { path: '', redirectTo: 'discover', pathMatch: 'full' },
     ],
   },

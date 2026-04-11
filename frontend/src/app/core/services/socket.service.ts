@@ -1,7 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Subject } from 'rxjs';
-import { AuthService } from './auth.service';
 import { environment } from '../../../environments/environment';
 
 export interface ChatMessage {
@@ -18,7 +17,6 @@ export interface ChatMessage {
 
 @Injectable({ providedIn: 'root' })
 export class SocketService {
-  private auth = inject(AuthService);
   private socket: Socket | null = null;
 
   newMessage$ = new Subject<ChatMessage>();
@@ -27,9 +25,8 @@ export class SocketService {
   messagesRead$ = new Subject<{ chatId: number; userId: number }>();
   newMatch$ = new Subject<{ chatId: number; userId: number }>();
 
-  async connect(): Promise<void> {
+  async connect(token: string): Promise<void> {
     if (this.socket?.connected) return;
-    const token = await this.auth.getToken();
     if (!token) return;
 
     this.socket = io(environment.apiUrl, {

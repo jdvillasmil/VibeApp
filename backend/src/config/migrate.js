@@ -64,6 +64,12 @@ async function migrate() {
       UNIQUE(user_id)
     )
   `);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_friendships_requester ON friendships(requester_id)`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_friendships_addressee ON friendships(addressee_id)`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_messages_chat_id ON messages(chat_id)`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_messages_sender_id ON messages(sender_id)`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_notifications_user_id ON notifications(user_id)`);
+  await pool.query(`CREATE INDEX IF NOT EXISTS idx_fcm_tokens_user_id ON fcm_tokens(user_id)`);
   console.log('Migration complete — all tables created');
   await pool.end();
 }

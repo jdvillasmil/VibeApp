@@ -22,6 +22,7 @@ async function register(req, res) {
       message: 'Registered',
     });
   } catch (err) {
+    console.error('[register] ERROR:', err);
     const msg = err.message || '';
     if (msg.toLowerCase().includes('duplicate') || msg.toLowerCase().includes('unique')) {
       return res.status(409).json({
@@ -60,6 +61,7 @@ async function login(req, res) {
         message: 'Invalid credentials',
       });
     }
+    console.error('[login] ERROR:', err);
     return res.status(500).json({
       data: null,
       error: 'INTERNAL_ERROR',

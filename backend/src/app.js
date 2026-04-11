@@ -41,6 +41,7 @@ app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/', require('./routes/discovery'));
 app.use('/chats', require('./routes/chats'));
+app.use('/notifications', require('./routes/notifications'));
 
 // Global error handler
 app.use((err, _req, res, _next) => {

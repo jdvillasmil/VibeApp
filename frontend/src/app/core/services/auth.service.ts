@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { Preferences } from '@capacitor/preferences';
 import { environment } from '../../../environments/environment';
+import { SocketService } from './socket.service';
 
 const TOKEN_KEY = 'auth_token';
 
@@ -11,6 +12,7 @@ const TOKEN_KEY = 'auth_token';
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
+  private socketService = inject(SocketService);
 
   isAuthenticated = signal<boolean>(false);
 
@@ -27,6 +29,7 @@ export class AuthService {
   async logout(): Promise<void> {
     await Preferences.remove({ key: TOKEN_KEY });
     this.isAuthenticated.set(false);
+    this.socketService.disconnect();
     this.router.navigate(['/login']);
   }
 

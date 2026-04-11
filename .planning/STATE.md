@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: in_progress
-stopped_at: "Completed 02-03-PLAN.md — Angular auth UI: login/register/profile pages, AuthService, HTTP interceptor, route guard, AvatarComponent"
-last_updated: "2026-04-10T01:52:35.118Z"
-last_activity: "2026-04-10 — 02-01 complete. Auth layer built: bcryptjs, jsonwebtoken, verifyToken middleware, POST /auth/register, POST /auth/login."
+status: planning
+stopped_at: Completed 05-05-PLAN.md — notification panel and bell badge; awaiting human-verify checkpoint
+last_updated: "2026-04-11T03:53:16.533Z"
+last_activity: "2026-04-10 — Phase 2 verified complete. Renny pushed Phase 3 (discovery: vibe presets, swipe cards, like/reject, mutual match, friends list) and Phase 4 (chat: socket.io rooms, messages, read receipts, typing indicator) frontend+backend. Code exists but has no PLAN.md/SUMMARY.md/VERIFICATION.md."
 progress:
   total_phases: 6
-  completed_phases: 2
-  total_plans: 6
-  completed_plans: 6
-  percent: 17
+  completed_phases: 3
+  total_plans: 11
+  completed_plans: 11
+  percent: 33
 ---
 
 # Project State
@@ -21,16 +21,15 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-01)
 
 **Core value:** Two users who mutually like each other are instantly connected with a live chat
-**Current focus:** Phase 2 — Auth & Profile
+**Current focus:** Phase 5 — Push Notifications (next to plan)
 
 ## Current Position
 
-Phase: 2 of 6 (Auth & Profile)
-Plan: 1 of TBD in current phase
-Status: in_progress
-Last activity: 2026-04-10 — 02-01 complete. Auth layer built: bcryptjs, jsonwebtoken, verifyToken middleware, POST /auth/register, POST /auth/login.
+Phase: 2 complete. Phases 3+4 code in repo (no GSD plans yet).
+Status: planning_needed — Phases 3 and 4 need /gsd:plan-phase or retroactive planning
+Last activity: 2026-04-10 — Phase 2 verified complete. Renny pushed Phase 3 (discovery: vibe presets, swipe cards, like/reject, mutual match, friends list) and Phase 4 (chat: socket.io rooms, messages, read receipts, typing indicator) frontend+backend. Code exists but has no PLAN.md/SUMMARY.md/VERIFICATION.md.
 
-Progress: [██░░░░░░░░] 17%
+Progress: [████░░░░░░] 33% (phases 1+2 complete via GSD; phases 3+4 untracked)
 
 ## Performance Metrics
 
@@ -50,6 +49,9 @@ Progress: [██░░░░░░░░] 17%
 - Trend: On track
 
 *Updated after each plan completion*
+| Phase 05-push-notifications P03 | 5 | 2 tasks | 4 files |
+| Phase 05-push-notifications P04 | 15 | 2 tasks | 2 files |
+| Phase 05-push-notifications P05 | 5 | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -79,6 +81,16 @@ Recent decisions affecting current work:
 - [Phase 02-auth-and-profile]: @capacitor/preferences used for JWT storage — persists across app restarts on device, stored under capacitor namespace in IndexedDB on browser
 - [Phase 02-auth-and-profile]: from()+switchMap() pattern in HttpInterceptorFn — only correct approach for Promise-returning getToken() in Angular functional interceptor
 - [Phase 02-auth-and-profile]: CanActivateFn returns router.createUrlTree(['/login']) not false — UrlTree enables proper browser navigation history
+- [Phase 05-01]: SocketService injected as constructor field in AuthService — no circular DI at runtime since SocketService only reads AuthService.getToken()
+- [Phase 05-01]: Six CREATE INDEX IF NOT EXISTS statements added to migrate.js — idempotent, safe to re-run against production
+- [Phase 05-push-notifications]: FIREBASE_PRIVATE_KEY env var uses literal \n — .replace applied at init to restore RSA newlines
+- [Phase 05-push-notifications]: sendFcmPush never throws — push failures are silent warnings; stale tokens are auto-deleted
+- [Phase 05-push-notifications]: Capacitor.isNativePlatform() guard makes initialize() a no-op in browser — prevents errors during web dev/testing
+- [Phase 05-push-notifications]: initialize() called after setToken() in LoginPage — ensures JWT is present when FCM token POST fires via HTTP interceptor
+- [Phase 05-push-notifications]: All FCM notification calls use .catch(() => {}) — push/save failures are silent and never propagate to callers
+- [Phase 05-push-notifications]: Recipient presence detection for socket push: cross-reference user_N personal room socket IDs against chat_N room members
+- [Phase 05-push-notifications]: NgIf from @angular/common added to TabsPage imports for *ngIf on IonBadge in inline template
+- [Phase 05-push-notifications]: Unread count derived by filtering GET /notifications response for read_at === null — avoids dedicated count endpoint
 
 ### Pending Todos
 
@@ -87,12 +99,13 @@ None yet.
 ### Blockers/Concerns
 
 - ~~Phase 2: Confirm `bcrypt` native build compiles on Render (fallback: `bcryptjs`)~~ — Resolved: using bcryptjs (pure JS, no native build)
+- Phases 3+4: Code pushed by Renny without GSD planning artifacts. Options: (a) run /gsd:map-codebase to document what exists, (b) write retroactive plans/summaries, (c) skip straight to Phase 5 planning.
 - Phase 4: Test Socket.io WebSocket transport through Render proxy on physical device early — 30s timeout risk
 - Phase 5: FCM v1 service account JSON must be obtained from Firebase Console before Phase 5 begins
 - Phase 5: FCM push does not work on Android emulator without Google Play Services — physical device required for push testing
 
 ## Session Continuity
 
-Last session: 2026-04-10T01:52:28.603Z
-Stopped at: Completed 02-03-PLAN.md — Angular auth UI: login/register/profile pages, AuthService, HTTP interceptor, route guard, AvatarComponent
+Last session: 2026-04-11T03:53:16.529Z
+Stopped at: Completed 05-05-PLAN.md — notification panel and bell badge; awaiting human-verify checkpoint
 Resume file: None

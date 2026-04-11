@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Notificaciones</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="notificationList().length > 0; else emptyState">
+    <ion-item *ngFor="let n of notificationList()">
+      <ion-icon [name]="iconForType(n.type)" slot="start" color="primary"></ion-icon>
+      <ion-label>
+        <h3>{{ labelForType(n.type, n.payload) }}</h3>
+        <ion-note>{{ n.created_at | date:'short' }}</ion-note>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #emptyState>
+    <div style="text-align:center; padding: 2rem;">
+      <p>No hay notificaciones</p>
+    </div>
+  </ng-template>
+</ion-content>

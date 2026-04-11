@@ -1,15 +1,20 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { NgIf } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import {
-  IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel,
+  IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { flame, people, chatbubbles, person } from 'ionicons/icons';
+import { flame, people, chatbubbles, person, notifications } from 'ionicons/icons';
 import { SocketService } from '../../core/services/socket.service';
+import { AuthService } from '../../core/services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-tabs',
   standalone: true,
-  imports: [IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel],
+  imports: [NgIf, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge],
   template: `
     <ion-tabs>
       <ion-tab-bar slot="bottom">
@@ -29,17 +34,37 @@ import { SocketService } from '../../core/services/socket.service';
           <ion-icon name="person"></ion-icon>
           <ion-label>Perfil</ion-label>
         </ion-tab-button>
+        <ion-tab-button tab="notifications" href="/tabs/notifications">
+          <ion-icon name="notifications"></ion-icon>
+          <ion-badge *ngIf="unreadCount() > 0" color="danger">{{ unreadCount() }}</ion-badge>
+          <ion-label>Notifs</ion-label>
+        </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>
   `,
 })
 export class TabsPage implements OnInit {
   private socket = inject(SocketService);
+  private auth = inject(AuthService);
+  private http = inject(HttpClient);
+  unreadCount = signal<number>(0);
 
-  constructor() { addIcons({ flame, people, chatbubbles, person }); }
+  constructor() { addIcons({ flame, people, chatbubbles, person, notifications }); }
 
   async ngOnInit(): Promise<void> {
-    // Connect socket when tabs load (user is authenticated)
-    await this.socket.connect();
+    const token = await this.auth.getToken();
+    if (token) await this.socket.connect(token);
+    await this.refreshUnreadCount();
+  }
+
+  async refreshUnreadCount(): Promise<void> {
+    try {
+      const res = await firstValueFrom(
+        this.http.get<{ data: Array<{ read_at: string | null }> }>(`${environment.apiUrl}/notifications`)
+      );
+      this.unreadCount.set((res.data ?? []).filter((n) => !n.read_at).length);
+    } catch {
+      this.unreadCount.set(0);
+    }
   }
 }

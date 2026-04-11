@@ -1,4 +1,5 @@
 const pool = require('../config/db');
+const notifService = require('./notifications.service');
 
 const SAFE_USER = 'u.id, u.name, u.avatar_url, u.bio, u.interests, u.vibe, u.vibe_updated_at';
 const ALLOWED_VIBES = ['Gaming', 'Music', 'Studying', 'Hang', 'Chill'];
@@ -65,8 +66,44 @@ async function likeUser(requesterId, addresseeId) {
       );
     }
 
-    return { matched: true, chatId: chat.rows[0].id };
+    const chatId = chat.rows[0].id;
+
+    // Notify both users of the match — non-blocking
+    const matcherResult = await pool.query('SELECT name FROM users WHERE id = $1', [requesterId]);
+    const matcherName = matcherResult.rows[0]?.name || 'Someone';
+    const matchedResult = await pool.query('SELECT name FROM users WHERE id = $1', [addresseeId]);
+    const matchedName = matchedResult.rows[0]?.name || 'Someone';
+
+    notifService.saveNotification(addresseeId, 'new_match', { chatId, withUserId: requesterId, withUserName: matcherName }).catch(() => {});
+    notifService.sendFcmPush(addresseeId, {
+      title: `Match con ${matcherName}!`,
+      body: 'Tenéis un chat listo para empezar.',
+      data: { type: 'new_match', chatId: String(chatId) },
+    }).catch(() => {});
+
+    notifService.saveNotification(requesterId, 'new_match', { chatId, withUserId: addresseeId, withUserName: matchedName }).catch(() => {});
+    notifService.sendFcmPush(requesterId, {
+      title: `Match con ${matchedName}!`,
+      body: 'Tenéis un chat listo para empezar.',
+      data: { type: 'new_match', chatId: String(chatId) },
+    }).catch(() => {});
+
+    return { matched: true, chatId };
   }
+
+  // One-sided like (NOTF-02) — notify addressee
+  const requesterResult = await pool.query('SELECT name FROM users WHERE id = $1', [requesterId]);
+  const requesterName = requesterResult.rows[0]?.name || 'Someone';
+
+  notifService.saveNotification(addresseeId, 'friend_request', {
+    fromUserId: requesterId,
+    fromUserName: requesterName,
+  }).catch(() => {});
+  notifService.sendFcmPush(addresseeId, {
+    title: `${requesterName} quiere ser tu amigo`,
+    body: 'Ábrela app para responder',
+    data: { type: 'friend_request', userId: String(requesterId) },
+  }).catch(() => {});
 
   return { matched: false };
 }

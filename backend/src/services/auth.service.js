@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const pool = require('../config/db');
 
 async function register({ name, email, password, avatarUrl }) {
+  console.log('[auth.service.register] called with email:', email);
   const password_hash = await bcrypt.hash(password, 10);
   const result = await pool.query(
     'INSERT INTO users (name, email, password_hash, avatar_url) VALUES ($1, $2, $3, $4) RETURNING id, name, email, avatar_url, created_at',

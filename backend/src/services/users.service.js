@@ -62,4 +62,13 @@ async function updateAvatar(userId, avatarUrl) {
   return result.rows[0];
 }
 
-module.exports = { getMe, updateMe, updateAvatar };
+async function saveFcmToken(userId, token) {
+  await pool.query(
+    `INSERT INTO fcm_tokens (user_id, token)
+     VALUES ($1, $2)
+     ON CONFLICT (user_id) DO UPDATE SET token = EXCLUDED.token`,
+    [userId, token]
+  );
+}
+
+module.exports = { getMe, updateMe, updateAvatar, saveFcmToken };

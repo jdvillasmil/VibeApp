@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Auth & Profile** - Registration, login, JWT, profile CRUD, avatar upload (completed 2026-04-10)
 - [ ] **Phase 3: Vibe Status + Discovery** - Vibe presets, swipe card stack, like/reject, mutual match, friends list
 - [ ] **Phase 4: Real-time Chat** - Socket.io rooms, message persistence, read receipts, typing indicator
-- [ ] **Phase 5: Push Notifications** - FCM registration, background push, in-app notification panel
+- [x] **Phase 5: Push Notifications** - FCM registration, background push, in-app notification panel (completed 2026-04-11)
 - [ ] **Phase 6: APK & Polish** - Production APK build, dark mode, swipe animations, device validation
 
 ## Phase Details
@@ -88,7 +88,14 @@ Plans:
   2. A physical Android device receives a push notification when another user sends a friend request, when a match is confirmed, and when a message arrives while the app is backgrounded
   3. Opening the in-app notification panel shows the full notification history list with unread count on the bell icon
   4. All unread notifications are marked as read after opening the panel
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Infrastructure fixes: socket disconnect on logout + DB indexes on friendships/messages/notifications/fcm_tokens
+- [ ] 05-02-PLAN.md — Backend FCM layer: firebase-admin singleton, notifications.service.js, POST /users/me/fcm-token, GET+PATCH /notifications
+- [ ] 05-03-PLAN.md — Frontend push registration: PushNotificationsService, login wiring, AndroidManifest POST_NOTIFICATIONS permission
+- [ ] 05-04-PLAN.md — FCM trigger wiring: sendFcmPush + saveNotification in discovery.service.js (like/match) and socket/index.js (message)
+- [ ] 05-05-PLAN.md — Frontend notification panel: NotificationsPage, bell tab button with IonBadge unread count, mark-read on open
 
 ### Phase 6: APK & Polish
 **Goal**: The app is built as a production APK pointing to Railway, installs on a physical Android device, and presents a polished dark-mode UI
@@ -112,9 +119,9 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 | 2. Auth & Profile | 3/3 | Complete   | 2026-04-10 |
 | 3. Vibe Status + Discovery | 0/TBD | Not started | - |
 | 4. Real-time Chat | 0/TBD | Not started | - |
-| 5. Push Notifications | 0/TBD | Not started | - |
+| 5. Push Notifications | 5/5 | Complete   | 2026-04-11 |
 | 6. APK & Polish | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-04-01*
-*Updated: 2026-04-10 — 02-01 complete: backend auth layer (bcryptjs, verifyToken, register/login endpoints)*
+*Updated: 2026-04-10 — Phase 5 planned: 5 plans across 4 waves (Wave 0: infra fixes, Wave 1: backend FCM + frontend push, Wave 2: trigger wiring, Wave 3: notification panel)*

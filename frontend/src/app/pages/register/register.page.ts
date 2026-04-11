@@ -73,7 +73,7 @@ export class RegisterPage {
     try {
       const res = await this.authService.register(formData);
       await this.authService.setToken(res.data.token);
-      await this.socketService.connect();
+      await this.socketService.connect(res.data.token);
       this.router.navigate(['/tabs/discover']);
     } catch {
       const alert = await this.alertCtrl.create({
