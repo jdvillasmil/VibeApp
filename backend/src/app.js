@@ -37,5 +37,16 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { dotfiles: 
 
 // Routes
 app.use('/health', require('./routes/health'));
+app.use('/auth', require('./routes/auth'));
+app.use('/users', require('./routes/users'));
+app.use('/', require('./routes/discovery'));
+app.use('/chats', require('./routes/chats'));
+app.use('/notifications', require('./routes/notifications'));
+
+// Global error handler
+app.use((err, _req, res, _next) => {
+  console.warn('Unhandled error:', err.message);
+  res.status(err.status || 500).json({ data: null, error: err.message, message: 'Server error' });
+});
 
 module.exports = app;

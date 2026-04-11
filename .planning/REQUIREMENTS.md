@@ -18,20 +18,20 @@
 
 ### Authentication
 
-- [ ] **AUTH-01**: User can register with name, email, password, and optional profile photo (Multer upload)
-- [ ] **AUTH-02**: Passwords are hashed with bcrypt (salt rounds: 10) before storage
-- [ ] **AUTH-03**: User can log in with email/password and receive a JWT
-- [ ] **AUTH-04**: JWT is stored in `@capacitor/preferences` (never localStorage)
-- [ ] **AUTH-05**: JWT verify middleware protects all non-public endpoints
-- [ ] **AUTH-06**: Angular HTTP interceptor attaches JWT to all API requests (async Preferences pattern)
-- [ ] **AUTH-07**: Angular route guard redirects unauthenticated users to login
+- [x] **AUTH-01**: User can register with name, email, password, and optional profile photo (Multer upload)
+- [x] **AUTH-02**: Passwords are hashed with bcrypt (salt rounds: 10) before storage
+- [x] **AUTH-03**: User can log in with email/password and receive a JWT
+- [x] **AUTH-04**: JWT is stored in `@capacitor/preferences` (never localStorage)
+- [x] **AUTH-05**: JWT verify middleware protects all non-public endpoints
+- [x] **AUTH-06**: Angular HTTP interceptor attaches JWT to all API requests (async Preferences pattern)
+- [x] **AUTH-07**: Angular route guard redirects unauthenticated users to login
 
 ### Profile
 
-- [ ] **PROF-01**: User can view their own profile (name, bio, avatar, interests, vibe status)
-- [ ] **PROF-02**: User can update their profile (name, bio, interests)
-- [ ] **PROF-03**: User can upload a new avatar photo (replaces existing)
-- [ ] **PROF-04**: User without an uploaded avatar sees a generated fallback (initials + deterministic color from name)
+- [x] **PROF-01**: User can view their own profile (name, bio, avatar, interests, vibe status)
+- [x] **PROF-02**: User can update their profile (name, bio, interests)
+- [x] **PROF-03**: User can upload a new avatar photo (replaces existing)
+- [x] **PROF-04**: User without an uploaded avatar sees a generated fallback (initials + deterministic color from name)
 
 ### Vibe Status
 
@@ -68,13 +68,13 @@
 
 ### Notifications
 
-- [ ] **NOTF-01**: App saves device FCM token to backend on login (`POST /users/me/fcm-token`)
-- [ ] **NOTF-02**: Push notification is sent via FCM v1 API (`firebase-admin`) when a user receives a new friend request
-- [ ] **NOTF-03**: Push notification is sent when a friend request is accepted (mutual match)
-- [ ] **NOTF-04**: Push notification is sent when a new message arrives while app is in background
-- [ ] **NOTF-05**: Notifications are persisted in the `notifications` DB table
-- [ ] **NOTF-06**: In-app notification panel shows notification history list with unread count badge on bell icon
-- [ ] **NOTF-07**: Notifications are marked as read when the panel is opened
+- [x] **NOTF-01**: App saves device FCM token to backend on login (`POST /users/me/fcm-token`)
+- [x] **NOTF-02**: Push notification is sent via FCM v1 API (`firebase-admin`) when a user receives a new friend request
+- [x] **NOTF-03**: Push notification is sent when a friend request is accepted (mutual match)
+- [x] **NOTF-04**: Push notification is sent when a new message arrives while app is in background
+- [x] **NOTF-05**: Notifications are persisted in the `notifications` DB table
+- [x] **NOTF-06**: In-app notification panel shows notification history list with unread count badge on bell icon
+- [x] **NOTF-07**: Notifications are marked as read when the panel is opened
 
 ### APK & Deployment
 
@@ -141,17 +141,17 @@
 | QUAL-03 | Phase 1 | Complete |
 | QUAL-04 | Phase 1 | Complete |
 | QUAL-05 | Phase 1 | Complete |
-| AUTH-01 | Phase 2 | Pending |
-| AUTH-02 | Phase 2 | Pending |
-| AUTH-03 | Phase 2 | Pending |
-| AUTH-04 | Phase 2 | Pending |
-| AUTH-05 | Phase 2 | Pending |
-| AUTH-06 | Phase 2 | Pending |
-| AUTH-07 | Phase 2 | Pending |
-| PROF-01 | Phase 2 | Pending |
-| PROF-02 | Phase 2 | Pending |
-| PROF-03 | Phase 2 | Pending |
-| PROF-04 | Phase 2 | Pending |
+| AUTH-01 | Phase 2 | Complete |
+| AUTH-02 | Phase 2 | Complete |
+| AUTH-03 | Phase 2 | Complete |
+| AUTH-04 | Phase 2 | Complete |
+| AUTH-05 | Phase 2 | Complete |
+| AUTH-06 | Phase 2 | Complete |
+| AUTH-07 | Phase 2 | Complete |
+| PROF-01 | Phase 2 | Complete |
+| PROF-02 | Phase 2 | Complete |
+| PROF-03 | Phase 2 | Complete |
+| PROF-04 | Phase 2 | Complete |
 | VIBE-01 | Phase 3 | Pending |
 | VIBE-02 | Phase 3 | Pending |
 | VIBE-03 | Phase 3 | Pending |
@@ -173,13 +173,13 @@
 | CHAT-07 | Phase 4 | Pending |
 | CHAT-08 | Phase 4 | Pending |
 | CHAT-09 | Phase 4 | Pending |
-| NOTF-01 | Phase 5 | Pending |
-| NOTF-02 | Phase 5 | Pending |
-| NOTF-03 | Phase 5 | Pending |
-| NOTF-04 | Phase 5 | Pending |
-| NOTF-05 | Phase 5 | Pending |
-| NOTF-06 | Phase 5 | Pending |
-| NOTF-07 | Phase 5 | Pending |
+| NOTF-01 | Phase 5 | Complete |
+| NOTF-02 | Phase 5 | Complete |
+| NOTF-03 | Phase 5 | Complete |
+| NOTF-04 | Phase 5 | Complete |
+| NOTF-05 | Phase 5 | Complete |
+| NOTF-06 | Phase 5 | Complete |
+| NOTF-07 | Phase 5 | Complete |
 | APK-01 | Phase 6 | Pending |
 | APK-02 | Phase 6 | Pending |
 | APK-03 | Phase 6 | Pending |

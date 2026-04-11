@@ -35,3 +35,30 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+// Inter font — clean modern look
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+// Global polish
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+ion-toolbar {
+  --min-height: 56px;
+}
+
+ion-tab-bar {
+  --border: 1px solid var(--ion-border-color, #e2e8f0);
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+// Smooth page transitions
+ion-router-outlet > .ion-page {
+  animation: fadeIn 0.15s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "43735144148",
+    "project_id": "vibeapp-b35a7",
+    "storage_bucket": "vibeapp-b35a7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43735144148:android:dea4caee1b250a040bcd41",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcG4pLCo6VRj462j1edIgQAtV2kA97jcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -12,11 +12,11 @@ VIBE is delivered in 6 phases that mirror the natural dependency chain of the pr
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [x] **Phase 1: Backend Foundation** - Project scaffolding, Render deployment, DB migration, CORS verified, code quality baseline
-- [ ] **Phase 2: Auth & Profile** - Registration, login, JWT, profile CRUD, avatar upload
+- [x] **Phase 1: Backend Foundation** - Project scaffolding, Render wiring, DB migration, code quality baseline
+- [x] **Phase 2: Auth & Profile** - Registration, login, JWT, profile CRUD, avatar upload (completed 2026-04-10)
 - [ ] **Phase 3: Vibe Status + Discovery** - Vibe presets, swipe card stack, like/reject, mutual match, friends list
 - [ ] **Phase 4: Real-time Chat** - Socket.io rooms, message persistence, read receipts, typing indicator
-- [ ] **Phase 5: Push Notifications** - FCM registration, background push, in-app notification panel
+- [x] **Phase 5: Push Notifications** - FCM registration, background push, in-app notification panel (completed 2026-04-11)
 - [ ] **Phase 6: APK & Polish** - Production APK build, dark mode, swipe animations, device validation
 
 ## Phase Details
@@ -36,19 +36,24 @@ Decimal phases appear between their surrounding integers in numeric order.
 Plans:
 - [x] 01-01-PLAN.md — Backend scaffold: Express server, pg Pool, migration, health route, CORS, static files, ESLint
 - [x] 01-02-PLAN.md — Frontend scaffold: Ionic + Angular 20 standalone, environment files, Capacitor Android, Angular ESLint
-- [x] 01-03-PLAN.md — Integration verification: Render deploy, migration, Android emulator CORS checkpoint
+- [x] 01-03-PLAN.md — Integration verification: Render deploy, migration, health check 200 confirmed
 
 ### Phase 2: Auth & Profile
 **Goal**: Users can create accounts, authenticate securely, and manage their profiles — every protected endpoint is usable
 **Depends on**: Phase 1
 **Requirements**: AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05, AUTH-06, AUTH-07, PROF-01, PROF-02, PROF-03, PROF-04
 **Success Criteria** (what must be TRUE):
-  1. A new user can register with name, email, password, and optional photo; the uploaded photo is served from /uploads
+  1. A new user can register with name, email, password, and optional photo; the uploaded photo is served from Cloudinary URL
   2. A registered user can log in, receive a JWT stored in @capacitor/preferences, and be redirected to the main app
   3. An unauthenticated user navigating to a protected route is redirected to login
   4. A logged-in user can view and edit their profile (name, bio, interests) and upload a new avatar
   5. A user without an uploaded avatar sees a generated fallback with their initials and a deterministic background color
-**Plans**: TBD
+**Plans**: 3 plans
+
+Plans:
+- [x] 02-01-PLAN.md — Backend auth routes: bcryptjs install, verifyToken middleware, POST /auth/register + POST /auth/login
+- [ ] 02-02-PLAN.md — Backend profile routes: GET /users/me, PATCH /users/me, PATCH /users/me/avatar (Cloudinary)
+- [ ] 02-03-PLAN.md — Frontend auth flow: auth service, interceptor (from()+switchMap()), route guard (UrlTree), login/register/profile pages, avatar fallback component
 
 ### Phase 3: Vibe Status + Discovery
 **Goal**: Users can express their current vibe and discover other users through swipe gestures — a mutual like creates a confirmed friendship and chat room
@@ -83,7 +88,14 @@ Plans:
   2. A physical Android device receives a push notification when another user sends a friend request, when a match is confirmed, and when a message arrives while the app is backgrounded
   3. Opening the in-app notification panel shows the full notification history list with unread count on the bell icon
   4. All unread notifications are marked as read after opening the panel
-**Plans**: TBD
+**Plans**: 5 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — Infrastructure fixes: socket disconnect on logout + DB indexes on friendships/messages/notifications/fcm_tokens
+- [ ] 05-02-PLAN.md — Backend FCM layer: firebase-admin singleton, notifications.service.js, POST /users/me/fcm-token, GET+PATCH /notifications
+- [ ] 05-03-PLAN.md — Frontend push registration: PushNotificationsService, login wiring, AndroidManifest POST_NOTIFICATIONS permission
+- [ ] 05-04-PLAN.md — FCM trigger wiring: sendFcmPush + saveNotification in discovery.service.js (like/match) and socket/index.js (message)
+- [ ] 05-05-PLAN.md — Frontend notification panel: NotificationsPage, bell tab button with IonBadge unread count, mark-read on open
 
 ### Phase 6: APK & Polish
 **Goal**: The app is built as a production APK pointing to Railway, installs on a physical Android device, and presents a polished dark-mode UI
@@ -103,13 +115,13 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5 → 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Backend Foundation | 4/4 | Complete   | 2026-04-09 |
-| 2. Auth & Profile | 0/TBD | Not started | - |
+| 1. Backend Foundation | 3/3 | Complete | 2026-04-09 |
+| 2. Auth & Profile | 3/3 | Complete   | 2026-04-10 |
 | 3. Vibe Status + Discovery | 0/TBD | Not started | - |
 | 4. Real-time Chat | 0/TBD | Not started | - |
-| 5. Push Notifications | 0/TBD | Not started | - |
+| 5. Push Notifications | 5/5 | Complete   | 2026-04-11 |
 | 6. APK & Polish | 0/TBD | Not started | - |
 
 ---
 *Roadmap created: 2026-04-01*
-*Updated: 2026-04-08 — Phase 1 plans defined (3 plans, 2 waves)*
+*Updated: 2026-04-10 — Phase 5 planned: 5 plans across 4 waves (Wave 0: infra fixes, Wave 1: backend FCM + frontend push, Wave 2: trigger wiring, Wave 3: notification panel)*
