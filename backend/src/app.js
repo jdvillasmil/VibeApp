@@ -39,7 +39,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), { dotfiles: 
 app.use('/health', require('./routes/health'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
-app.use('/', require('./routes/discovery'));
+app.use('/discovery', require('./routes/discovery'));
 app.use('/chats', require('./routes/chats'));
 app.use('/notifications', require('./routes/notifications'));
 
