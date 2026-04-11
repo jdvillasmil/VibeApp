@@ -17,6 +17,7 @@ async function saveNotification(userId, type, payload) {
 }
 
 async function sendFcmPush(userId, { title, body, data }) {
+  if (!admin.apps.length) return; // Firebase not configured — skip silently
   const token = await getFcmToken(userId);
   if (!token) return;
 

@@ -1,7 +1,7 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject, signal } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import {
   IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonBadge,
 } from '@ionic/angular/standalone';
@@ -43,11 +43,12 @@ import { environment } from '../../../environments/environment';
     </ion-tabs>
   `,
 })
-export class TabsPage implements OnInit {
+export class TabsPage implements OnInit, OnDestroy {
   private socket = inject(SocketService);
   private auth = inject(AuthService);
   private http = inject(HttpClient);
   unreadCount = signal<number>(0);
+  private subs: Subscription[] = [];
 
   constructor() { addIcons({ flame, people, chatbubbles, person, notifications }); }
 
@@ -55,6 +56,16 @@ export class TabsPage implements OnInit {
     const token = await this.auth.getToken();
     if (token) await this.socket.connect(token);
     await this.refreshUnreadCount();
+
+    // Refresh badge when a new match or message notification arrives
+    this.subs.push(
+      this.socket.newMatch$.subscribe(() => this.unreadCount.update((n) => n + 1)),
+      this.socket.newMessage$.subscribe(() => this.refreshUnreadCount()),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subs.forEach((s) => s.unsubscribe());
   }
 
   async refreshUnreadCount(): Promise<void> {

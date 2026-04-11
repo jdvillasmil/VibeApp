@@ -15,6 +15,7 @@ import {
 } from '@ionic/angular/standalone';
 import { AuthService } from '../../core/services/auth.service';
 import { SocketService } from '../../core/services/socket.service';
+import { PushNotificationsService } from '../../core/services/push-notifications.service';
 
 @Component({
   selector: 'app-register',
@@ -38,6 +39,7 @@ export class RegisterPage {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private socketService = inject(SocketService);
+  private pushNotifications = inject(PushNotificationsService);
   private router = inject(Router);
   private alertCtrl = inject(AlertController);
 
@@ -73,6 +75,7 @@ export class RegisterPage {
     try {
       const res = await this.authService.register(formData);
       await this.authService.setToken(res.data.token);
+      await this.pushNotifications.initialize();
       await this.socketService.connect(res.data.token);
       this.router.navigate(['/tabs/discover']);
     } catch {
