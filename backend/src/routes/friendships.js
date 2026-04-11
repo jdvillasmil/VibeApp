@@ -4,7 +4,11 @@ const ctrl = require('../controllers/discovery.controller');
 
 router.use(verifyToken);
 
-// GET /discovery — swipe card stack
-router.get('/', ctrl.discover);
+// POST /friendships — like or reject a user
+// Body: { userId: number, action: 'like' | 'reject' }
+router.post('/', ctrl.friendship);
+
+// GET /friendships — accepted friends list
+router.get('/', ctrl.getFriends);
 
 module.exports = router;

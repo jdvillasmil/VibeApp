@@ -40,6 +40,7 @@ app.use('/health', require('./routes/health'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));
 app.use('/discovery', require('./routes/discovery'));
+app.use('/friendships', require('./routes/friendships'));
 app.use('/chats', require('./routes/chats'));
 app.use('/notifications', require('./routes/notifications'));
 
