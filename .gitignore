@@ -18,3 +18,4 @@ ios/
 # Uploads (keep folder, ignore contents)
 backend/src/uploads/*
 !backend/src/uploads/.gitkeep
+google-services*.json
