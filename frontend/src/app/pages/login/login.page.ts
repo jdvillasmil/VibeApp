@@ -2,18 +2,7 @@ import { Component, inject } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import {
-  IonContent,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonItem,
-  IonInput,
-  IonButton,
-  IonLabel,
-  IonNote,
-  AlertController,
-} from '@ionic/angular/standalone';
+import { IonContent, IonInput, IonButton, AlertController } from '@ionic/angular/standalone';
 import { AuthService } from '../../core/services/auth.service';
 import { SocketService } from '../../core/services/socket.service';
 import { PushNotificationsService } from '../../core/services/push-notifications.service';
@@ -26,16 +15,11 @@ import { PushNotificationsService } from '../../core/services/push-notifications
     ReactiveFormsModule,
     RouterLink,
     IonContent,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonItem,
     IonInput,
     IonButton,
-    IonLabel,
-    IonNote,
   ],
   templateUrl: './login.page.html',
+  styleUrl: './login.page.scss',
 })
 export class LoginPage {
   private fb = inject(FormBuilder);
@@ -58,9 +42,9 @@ export class LoginPage {
     try {
       const res = await this.authService.login(email!, password!);
       await this.authService.setToken(res.data.token);
-      await this.pushNotifications.initialize();
-      await this.socketService.connect(res.data.token);
-      this.router.navigate(['/tabs/discover']);
+      try { await this.pushNotifications.initialize(); } catch { /* FCM optional */ }
+      try { await this.socketService.connect(res.data.token); } catch { /* socket optional */ }
+      this.router.navigate(['/tabs/discover'], { replaceUrl: true });
     } catch {
       const alert = await this.alertCtrl.create({
         header: 'Error al iniciar sesión',

@@ -84,7 +84,7 @@ function calcMatchScore(myInterests: string[], theirInterests: string[]): number
     </div>
   `,
   styles: [`
-    .card { position: relative; width: 100%; border-radius: 20px; overflow: hidden; background: white; box-shadow: 0 10px 40px rgba(0,0,0,0.15); user-select: none; cursor: grab; }
+    .card { position: relative; width: 100%; border-radius: 20px; overflow: hidden; background: #ffffff; box-shadow: 0 10px 40px rgba(0,0,0,0.15); user-select: none; cursor: grab; }
     .vibe-hero { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 16px 24px; }
     .vibe-none { background: linear-gradient(135deg,#6b7280,#9ca3af); }
     .vibe-emoji { font-size: 4.5rem; line-height: 1; }
@@ -93,9 +93,9 @@ function calcMatchScore(myInterests: string[], theirInterests: string[]): number
     .avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 3px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.2); flex-shrink: 0; }
     .initials-avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--ion-color-primary); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; font-weight: bold; flex-shrink: 0; }
     .name-block { flex: 1; }
-    .name { margin: 0; font-size: 1.4rem; font-weight: 700; }
+    .name { margin: 0; font-size: 1.4rem; font-weight: 700; color: #1e293b; }
     .match-pill { display: inline-block; background: #dcfce7; color: #15803d; font-size: 0.75rem; font-weight: 600; padding: 2px 10px; border-radius: 20px; margin-top: 4px; }
-    .bio { margin: 12px 16px 0; font-size: 0.9rem; color: var(--ion-color-medium); line-height: 1.4; }
+    .bio { margin: 12px 16px 0; font-size: 0.9rem; color: #64748b; line-height: 1.4; }
     .interests { display: flex; flex-wrap: wrap; gap: 4px; padding: 10px 12px 16px; }
     .chip { --background: #f1f5f9; --color: #475569; font-size: 0.75rem; height: 26px; }
     .overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; transition: opacity 0.1s; }

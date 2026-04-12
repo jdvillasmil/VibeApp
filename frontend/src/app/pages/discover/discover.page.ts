@@ -46,40 +46,41 @@ interface ApiResponse<T> { data: T; error: string | null; message: string; }
           <div class="match-toast">🎉 ¡Es un match! Ya pueden chatear</div>
         }
 
-        <div class="stack-container">
-          <!-- Show top 2 cards for depth effect -->
-          @if (stack().length > 1) {
-            <div class="card-shadow"></div>
-          }
-          <app-swipe-card
-            [user]="stack()[0]"
-            [myInterests]="myInterests()"
-            (liked)="onLike($event)"
-            (rejected)="onReject($event)"
-          ></app-swipe-card>
-        </div>
+        <div class="discover-layout">
+          <div class="stack-container">
+            @if (stack().length > 1) {
+              <div class="card-shadow"></div>
+            }
+            <app-swipe-card
+              [user]="stack()[0]"
+              [myInterests]="myInterests()"
+              (liked)="onLike($event)"
+              (rejected)="onReject($event)"
+            ></app-swipe-card>
+          </div>
 
-        <div class="action-row">
-          <ion-button
-            class="action-btn nope-btn"
-            shape="round"
-            fill="outline"
-            color="danger"
-            (click)="onReject(stack()[0])"
-            [disabled]="acting()"
-          >
-            <ion-icon name="close" slot="icon-only" size="large"></ion-icon>
-          </ion-button>
-          <ion-button
-            class="action-btn like-btn"
-            shape="round"
-            fill="solid"
-            color="success"
-            (click)="onLike(stack()[0])"
-            [disabled]="acting()"
-          >
-            <ion-icon name="heart" slot="icon-only" size="large"></ion-icon>
-          </ion-button>
+          <div class="action-row">
+            <ion-button
+              class="action-btn nope-btn"
+              shape="round"
+              fill="outline"
+              color="danger"
+              (click)="onReject(stack()[0])"
+              [disabled]="acting()"
+            >
+              <ion-icon name="close" slot="icon-only" size="large"></ion-icon>
+            </ion-button>
+            <ion-button
+              class="action-btn like-btn"
+              shape="round"
+              fill="solid"
+              color="success"
+              (click)="onLike(stack()[0])"
+              [disabled]="acting()"
+            >
+              <ion-icon name="heart" slot="icon-only" size="large"></ion-icon>
+            </ion-button>
+          </div>
         </div>
       }
     </ion-content>
@@ -91,11 +92,12 @@ interface ApiResponse<T> { data: T; error: string | null; message: string; }
     h3 { font-size: 1.4rem; font-weight: 700; margin: 0; }
     .empty-state p { color: var(--ion-color-medium); margin: 0; }
 
-    .stack-container { position: relative; padding: 16px 16px 0; max-width: 420px; margin: 0 auto; }
+    .discover-layout { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 56px); padding: 16px; box-sizing: border-box; }
+    .stack-container { position: relative; width: 100%; max-width: 400px; }
     .card-shadow { position: absolute; top: 24px; left: 28px; right: 28px; height: 100%; background: #e2e8f0; border-radius: 20px; z-index: 0; }
     app-swipe-card { position: relative; z-index: 1; display: block; }
 
-    .action-row { display: flex; justify-content: center; gap: 48px; padding: 20px 16px; max-width: 420px; margin: 0 auto; }
+    .action-row { display: flex; justify-content: center; gap: 48px; padding: 24px 16px 0; width: 100%; max-width: 400px; }
     .action-btn { width: 68px; height: 68px; --border-radius: 50%; }
     .match-toast { position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 9999; background: #16a34a; color: white; padding: 14px 32px; border-radius: 28px; font-weight: 700; font-size: 1rem; box-shadow: 0 8px 24px rgba(0,0,0,0.2); white-space: nowrap; }
   `],

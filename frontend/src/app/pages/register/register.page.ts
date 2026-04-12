@@ -2,17 +2,7 @@ import { Component, inject, signal } from '@angular/core';
 import { NgIf } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import {
-  IonContent,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonItem,
-  IonInput,
-  IonButton,
-  IonLabel,
-  AlertController,
-} from '@ionic/angular/standalone';
+import { IonContent, IonInput, IonButton, AlertController } from '@ionic/angular/standalone';
 import { AuthService } from '../../core/services/auth.service';
 import { SocketService } from '../../core/services/socket.service';
 import { PushNotificationsService } from '../../core/services/push-notifications.service';
@@ -25,15 +15,11 @@ import { PushNotificationsService } from '../../core/services/push-notifications
     ReactiveFormsModule,
     RouterLink,
     IonContent,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonItem,
     IonInput,
     IonButton,
-    IonLabel,
   ],
   templateUrl: './register.page.html',
+  styleUrl: './register.page.scss',
 })
 export class RegisterPage {
   private fb = inject(FormBuilder);
@@ -44,6 +30,7 @@ export class RegisterPage {
   private alertCtrl = inject(AlertController);
 
   selectedFile = signal<File | null>(null);
+  avatarPreview = signal<string | null>(null);
 
   form = this.fb.group({
     name: ['', Validators.required],
@@ -54,7 +41,11 @@ export class RegisterPage {
   onFileChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile.set(input.files[0]);
+      const file = input.files[0];
+      this.selectedFile.set(file);
+      const reader = new FileReader();
+      reader.onload = (e) => this.avatarPreview.set(e.target?.result as string);
+      reader.readAsDataURL(file);
     }
   }
 
@@ -75,9 +66,9 @@ export class RegisterPage {
     try {
       const res = await this.authService.register(formData);
       await this.authService.setToken(res.data.token);
-      await this.pushNotifications.initialize();
-      await this.socketService.connect(res.data.token);
-      this.router.navigate(['/tabs/discover']);
+      try { await this.pushNotifications.initialize(); } catch { /* FCM optional */ }
+      try { await this.socketService.connect(res.data.token); } catch { /* socket optional */ }
+      this.router.navigate(['/tabs/discover'], { replaceUrl: true });
     } catch {
       const alert = await this.alertCtrl.create({
         header: 'Error al registrarse',

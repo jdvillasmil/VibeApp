@@ -1,62 +1,92 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Create Account</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="auth-page">
 
-<ion-content class="ion-padding">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-label position="stacked">Name</ion-label>
-      <ion-input
-        type="text"
-        formControlName="name"
-        placeholder="Your name"
-        autocomplete="name"
-      ></ion-input>
-    </ion-item>
+    <!-- Branding hero -->
+    <div class="hero">
+      <span class="hero-logo">✨</span>
+      <h1 class="hero-title">Crea tu cuenta</h1>
+      <p class="hero-subtitle">Únete y encuentra tu vibe</p>
+    </div>
 
-    <ion-item>
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input
-        type="email"
-        formControlName="email"
-        placeholder="you@example.com"
-        autocomplete="email"
-      ></ion-input>
-    </ion-item>
+    <!-- Form -->
+    <div class="form-card">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="field-group">
 
-    <ion-item>
-      <ion-label position="stacked">Password</ion-label>
-      <ion-input
-        type="password"
-        formControlName="password"
-        placeholder="••••••"
-        autocomplete="new-password"
-      ></ion-input>
-    </ion-item>
+          <div class="field">
+            <label class="field-label">Nombre</label>
+            <ion-input
+              class="field-input"
+              type="text"
+              formControlName="name"
+              placeholder="Tu nombre"
+              autocomplete="name"
+            ></ion-input>
+          </div>
 
-    <div class="ion-padding-top ion-padding-horizontal">
-      <ion-label>Profile Photo (optional)</ion-label>
-      <input
-        type="file"
-        accept="image/*"
-        (change)="onFileChange($event)"
-        style="margin-top: 8px; display: block;"
-      />
-      <p *ngIf="selectedFile()" style="font-size: 0.85em; color: gray;">
-        Selected: {{ selectedFile()?.name }}
+          <div class="field">
+            <label class="field-label">Email</label>
+            <ion-input
+              class="field-input"
+              type="email"
+              formControlName="email"
+              placeholder="tu@email.com"
+              autocomplete="email"
+            ></ion-input>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Contraseña</label>
+            <ion-input
+              class="field-input"
+              type="password"
+              formControlName="password"
+              placeholder="••••••••"
+              autocomplete="new-password"
+            ></ion-input>
+          </div>
+
+          <!-- Avatar picker -->
+          <div class="field">
+            <label class="field-label">Foto de perfil (opcional)</label>
+            <label class="avatar-picker" for="avatar-input">
+              <img
+                *ngIf="avatarPreview()"
+                [src]="avatarPreview()"
+                class="avatar-preview"
+                alt="preview"
+              />
+              <div *ngIf="!avatarPreview()" class="avatar-placeholder">📷</div>
+              <div class="avatar-picker-text">
+                <strong>{{ selectedFile() ? selectedFile()!.name : 'Seleccionar imagen' }}</strong>
+                <small>{{ selectedFile() ? 'Toca para cambiar' : 'JPG, PNG o GIF' }}</small>
+              </div>
+            </label>
+            <input
+              id="avatar-input"
+              type="file"
+              accept="image/*"
+              style="display: none;"
+              (change)="onFileChange($event)"
+            />
+          </div>
+
+        </div>
+
+        <ion-button
+          class="submit-btn"
+          expand="block"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          Crear cuenta
+        </ion-button>
+      </form>
+
+      <p class="footer-text">
+        ¿Ya tienes cuenta? <a routerLink="/login">Ingresar</a>
       </p>
     </div>
 
-    <div class="ion-padding-top">
-      <ion-button expand="block" type="submit" [disabled]="form.invalid">
-        Create Account
-      </ion-button>
-    </div>
-  </form>
-
-  <div class="ion-text-center ion-padding-top">
-    <p>Already have an account? <a routerLink="/login">Sign In</a></p>
   </div>
 </ion-content>

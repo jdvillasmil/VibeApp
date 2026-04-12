@@ -6,7 +6,22 @@
       "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d, indent=2\\)\\)\")",
       "Bash(sed -n '55,80p' frontend/src/app/pages/login/login.page.ts)",
       "Bash(sed -n '65,85p' frontend/src/app/pages/register/register.page.ts)",
-      "Bash(npx ng:*)"
+      "Bash(npx ng:*)",
+      "Bash(ng build:*)",
+      "Bash(npx cap:*)",
+      "Bash(./gradlew assembleDebug)",
+      "Bash(explorer C:\\\\Users\\\\jdvil\\\\workspace\\\\personal\\\\URU\\\\Vibeapp\\\\frontend\\\\android\\\\app\\\\build\\\\outputs\\\\apk\\\\debug:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(adb devices:*)",
+      "Read(//c/Users/jdvil/AppData/Local/Android/Sdk/platform-tools/**)",
+      "Read(//c/Users/jdvil/AppData/Local/Android//**)",
+      "Bash(/c/Users/jdvil/AppData/Local/Android/Sdk/platform-tools/adb.exe devices:*)",
+      "Bash(./gradlew assembleRelease)",
+      "Bash(C:/Users/jdvil/AppData/Local/Android/Sdk/build-tools/36.1.0/zipalign.exe -v -p 4 C:/Users/jdvil/workspace/personal/URU/Vibeapp/frontend/android/app/build/outputs/apk/release/app-release-unsigned.apk C:/Users/jdvil/workspace/personal/URU/Vibeapp/frontend/android/app/build/outputs/apk/release/app-release-aligned.apk)",
+      "Bash($ADB install:*)",
+      "Bash($ADB uninstall:*)",
+      "Bash($ADB devices:*)",
+      "Bash($ADB:*)"
     ]
   }
 }

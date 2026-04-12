@@ -31,7 +31,7 @@ export class SocketService {
 
     this.socket = io(environment.apiUrl, {
       auth: { token },
-      transports: ['websocket'],
+      transports: ['websocket', 'polling'],
       reconnectionAttempts: 5,
       reconnectionDelay: 2000,
     });

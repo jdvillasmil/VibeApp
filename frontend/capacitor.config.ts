@@ -5,7 +5,7 @@ const config: CapacitorConfig = {
   appName: 'VIBE',
   webDir: 'www',
   server: {
-    androidScheme: 'https',
+    androidScheme: 'http',
   },
   plugins: {
     SplashScreen: {

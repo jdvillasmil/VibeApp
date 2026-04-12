@@ -1,53 +1,66 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Sign In</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true">
+  <div class="auth-page">
 
-<ion-content class="ion-padding">
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-label position="stacked">Email</ion-label>
-      <ion-input
-        type="email"
-        formControlName="email"
-        placeholder="you@example.com"
-        autocomplete="email"
-      ></ion-input>
-    </ion-item>
-    <ion-note
-      *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
-      color="danger"
-      class="ion-padding-start"
-    >
-      Valid email required
-    </ion-note>
-
-    <ion-item>
-      <ion-label position="stacked">Password</ion-label>
-      <ion-input
-        type="password"
-        formControlName="password"
-        placeholder="••••••"
-        autocomplete="current-password"
-      ></ion-input>
-    </ion-item>
-    <ion-note
-      *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
-      color="danger"
-      class="ion-padding-start"
-    >
-      Password must be at least 6 characters
-    </ion-note>
-
-    <div class="ion-padding-top">
-      <ion-button expand="block" type="submit" [disabled]="form.invalid">
-        Sign In
-      </ion-button>
+    <!-- Branding hero -->
+    <div class="hero">
+      <span class="hero-logo">✨</span>
+      <h1 class="hero-title">VIBE</h1>
+      <p class="hero-subtitle">Conecta con personas que vibran contigo</p>
     </div>
-  </form>
 
-  <div class="ion-text-center ion-padding-top">
-    <p>Don't have an account? <a routerLink="/register">Register</a></p>
+    <!-- Form -->
+    <div class="form-card">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="field-group">
+
+          <div class="field">
+            <label class="field-label">Email</label>
+            <ion-input
+              class="field-input"
+              type="email"
+              formControlName="email"
+              placeholder="tu@email.com"
+              autocomplete="email"
+            ></ion-input>
+            <span
+              *ngIf="form.get('email')?.invalid && form.get('email')?.touched"
+              class="field-error"
+            >Email válido requerido</span>
+          </div>
+
+          <div class="field">
+            <label class="field-label">Contraseña</label>
+            <ion-input
+              class="field-input"
+              type="password"
+              formControlName="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+            ></ion-input>
+            <span
+              *ngIf="form.get('password')?.invalid && form.get('password')?.touched"
+              class="field-error"
+            >Mínimo 6 caracteres</span>
+          </div>
+
+        </div>
+
+        <ion-button
+          class="submit-btn"
+          expand="block"
+          type="submit"
+          [disabled]="form.invalid"
+        >
+          Ingresar
+        </ion-button>
+      </form>
+
+      <div class="divider">o</div>
+
+      <p class="footer-text">
+        ¿No tienes cuenta? <a routerLink="/register">Regístrate</a>
+      </p>
+    </div>
+
   </div>
 </ion-content>
